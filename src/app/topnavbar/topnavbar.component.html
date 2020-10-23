@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-lg navbar-dark  mb-3" id="mynavbar">
+  <a class="navbar-brand" [routerLink]="'.'">Stock Search</a>
+
+  <!-- Step 3: Toggle the value of the property when the toggler button is clicked. -->
+  <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
+    &#9776;
+  </button>
+
+  <!-- Step 2: Add the ngbCollapse directive to the element below. -->
+  <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse justify-content-end">
+    <ul class="navbar-nav " >
+      <li [routerLinkActive]="['active']" class="nav-item px-3 ">
+        <!-- Step 4: Close the menu when a link is clicked. -->
+        <a class="nav-link text-right" [routerLink]="'/search'" (click)="isMenuCollapsed = true">Search</a>
+      </li>
+      <li  [routerLinkActive]="['active']"  class="nav-item px-3">
+        <a class="nav-link text-right" [routerLink]="'/watchlist'" (click)="isMenuCollapsed = true">Watchlist</a>
+      </li>
+      <li [routerLinkActive]="['active']"  class="nav-item px-3" >
+        <a class="nav-link text-right" [routerLink]="'/portilio'" (click)="isMenuCollapsed = true">Portfolio</a>
+      </li>
+    </ul>
+  </div>
+</nav>
