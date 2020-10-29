@@ -1,44 +1,51 @@
 <div *ngIf="details||!hasdetail; else loading"></div>
 
-<div *ngIf="hasdetail && details|async as thedetail" class="container">
+
+<div *ngIf="hasdetail && details as thedetail" class="container">
+  <ngb-alert *ngIf="!closeMessage && likeit" type="success"  class="text-center" (close)="closeMessage = true">
+    {{thedetail.ticker}} added to Watchlist.
+  </ngb-alert>
+  <ngb-alert *ngIf="!closeMessage && !likeit"  type="danger"  class="text-center" (close)="closeMessage = true">
+    {{thedetail.ticker}} removed from Watchlist.
+  </ngb-alert>
   <div class="row">
-    <div class="col">{{thedetail.ticker}}ticker
-      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <div class="col h1" >{{thedetail.ticker}}
+      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star align-text-top h-50" fill="currentColor" xmlns="http://www.w3.org/2000/svg" *ngIf="!likeit" (click)="likeStock()">
         <path fill-rule="evenodd" d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
       </svg>
-      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill align-text-top h-50" fill="#F3D825" xmlns="http://www.w3.org/2000/svg" *ngIf="likeit" (click)="likeStock()">
         <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
       </svg>
     </div>
-    <div class="col">{{thedetail.last}}last price</div>
+    <div class="col h1 text-right" style="color:{{thedetail.color}}">{{thedetail.last}}</div>
   </div>
   <div class="row">
-    <div class="col">{{thedetail.name}}name</div>
-    <div class="col">
-      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <div class="col h3" style="color: #6A737F">{{thedetail.name}}</div>
+    <div class="col h3 text-right"style="color:{{thedetail.color}}">
+      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="#008000" xmlns="http://www.w3.org/2000/svg" *ngIf="thedetail.up">
         <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
       </svg>
-      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="#ff0000" xmlns="http://www.w3.org/2000/svg" *ngIf="thedetail.down">
         <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
       </svg>
-      {{thedetail.change}} {{thedetail.changePercent}}change changePercent</div>
+      {{thedetail.change}}   ({{thedetail.changePercent}})%</div>
   </div>
   <div class="row">
-    <div class="col">{{thedetail.exchangeCode}}exchange code</div>
-    <div class="col">{{currentTime | date:"yyyy-MM-dd HH:mm:ss"}}local date time</div>
+    <div class="col ">{{thedetail.exchangeCode}}</div>
+    <div class="col text-right">{{currentTime | date:"yyyy-MM-dd HH:mm:ss"}}</div>
   </div>
   <div class="row">
-    <div class="col"> <button class="btn btn-outline-primary mb-2 mr-2" (click)="openBackDropCustomClass(content)">Buy</button></div>
+    <div class="col"> <button class="btn btn-success mb-2 mr-2" (click)="openBackDropCustomClass(content)">Buy</button></div>
   </div>
   <div class="row">
-    <div class="col" *ngIf="market">market open</div>
-    <div class="col" *ngIf="!market">market close on {{openTime}}</div>
+    <div class="col text-center" *ngIf="market"><span style="background-color:rgba(0,128,0,0.2)">market open</span></div>
+    <div class="col text-center " *ngIf="!market"><span style="background-color:rgba(255,0,0,0.2)">market close on {{openTime | date:"yyyy-MM-dd HH:mm:ss"}}</span></div>
   </div>
-  <mat-tab-group mat-align-tabs="center">
-    <mat-tab label="First">
+  <mat-tab-group mat-stretch-tabs class="my-5">
+    <mat-tab label="Summary">
       <div class="container ">
         <div class="row">
-          <div class="col">
+          <div class="col my-5">
             <div class="row">
               <div class="col">High Price: {{thedetail.startDate || '-' }}</div>
               <div class="col">Mid Price: {{thedetail.mid || '-'}}</div>
@@ -59,42 +66,95 @@
               <div class="col">Volume: {{thedetail.volume || '-'}}</div>
               <div class="col">Bid Size: {{thedetail.bidSize || '-'}}</div>
             </div>
-            <div class="row">Company's Description</div>
-            <div class="row">Start Date: {{thedetail.startDate}}</div>
+            <div class="row h5 my-5">
+              <div class="col text-center">Company's Description</div>
+            </div>
+            <div class="row my-1">Start Date: {{thedetail.startDate}}</div>
             <div class="row">{{thedetail.description}}</div>
           </div>
-          <div class="col"></div>
+          <div class="col my-5">
+            <highcharts-chart
+              [Highcharts]="Highcharts"
+              [options]="chartOptions"
+              constructorType="stockChart"
+              style="width: 100%; height: 400px; display: block;"
+            ></highcharts-chart>
+          </div>
         </div>
       </div>
     </mat-tab>
-    <mat-tab label="Second">
-      Content 2
+    <mat-tab label="Top News">
+      <div class="container">
+        <div class="row my-3" *ngFor="let news of thenewsData ; let i=index">
+            <div class="col border mx-2 p-4" style="background-color: #F6F6F6" (click)="openShare(shareContente,i,0)">
+              <div class="row">
+                <div class="col-5"><img src="{{news[0].urlToImage}}" class="mw-100" style="max-height: 6em"></div>
+                <div class="col"><span>{{news[0].title}}</span></div>
+              </div>
+
+            </div>
+            <div class="col border mx-2 p-4" *ngIf="news[1]" style="background-color: #F6F6F6" (click)="openShare(shareContente,i,1)">
+              <div class="row">
+                <div class="col-4"><img src="{{news[1].urlToImage}}" class="mw-100" style="max-height: 6em"></div>
+                <div class="col"><span>{{news[1].title}}</span></div>
+              </div>
+            </div>
+
+          <div></div>
+        </div>
+      </div>
     </mat-tab>
-    <mat-tab label="Third">
+    <mat-tab label="Charts">
       Content 3
     </mat-tab>
   </mat-tab-group>
   <ng-template #content let-modal>
     <div class="modal-header">
-      <h4 class="modal-title">Modal title</h4>
+      <h4 class="modal-title">{{thedetail.ticker}}</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <p>One fine body&hellip;</p>
+      <p>Current Price: {{thedetail.last}}</p>
+      Quantity  <input type="number" id="quantity" name="quantity" size="20" class="form-control"
+                     [formControl]="myControl" min="0" style="width:13em; display:inline-block">
     </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    <div class="modal-footer justify-content-between">
+      <span>Total: {{total}}</span>
+      <button type="button" class="btn btn-success" (click)="buyStocks(); modal.close('Close click')">Buy</button>
+    </div>
+  </ng-template>
+
+  <ng-template #shareContente let-modal>
+    <div class="modal-header">
+      <div>
+        <h1 class="modal-title">{{thenewsData[currentX][currentY].title.split(" ")[0]}}</h1>
+        <p style="color: #6A737F">{{publishdate| date:'MMMM dd,yyyy'}}</p>
+      </div>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p class="h6">{{thenewsData[currentX][currentY].title}}</p>
+      <p>{{thenewsData[currentX][currentY].description}}</p>
+      <p style="color: #6A737F">For more details click <a href="{{thenewsData[currentX][currentY].url}}" target="_Blank">here</a></p>
+    </div>
+    <div class="modal-footer ">
+      <div><a class="twitter-share-button"
+              href="https://twitter.com/intent/tweet?text={{thenewsData[currentX][currentY].title}}&url={{thenewsData[currentX][currentY].url}}"  target="_blank">
+        <i class="fab fa-twitter" style="color:deepskyblue"></i></a></div>
     </div>
   </ng-template>
 </div>
 
 <div class="container" *ngIf="!hasdetail">
-    <ngb-alert type="danger" [dismissible]="false" >
+    <ngb-alert type="danger" [dismissible]="false" class="text-center" >
         No result found. Please enter valid Ticker
     </ngb-alert>
 </div>
+
 <ng-template class="container" #loading>
   <div class="container  d-flex justify-content-center align-items-center" >
     <mat-spinner color="#6F4FFB"></mat-spinner>

@@ -13,6 +13,7 @@ import {MaterialModule} from './material-module/material-module.module';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { DetailsComponent } from './details/details.component';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { DetailsComponent } from './details/details.component';
     MaterialModule,
     HttpClientModule,
     HttpClientJsonpModule,
+    HighchartsChartModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },

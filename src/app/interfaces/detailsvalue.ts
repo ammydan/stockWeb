@@ -19,4 +19,8 @@ export interface Detailsvalue {
     timestamp: string;
     change: number;
     changePercent: number;
+    color: string;
+    up: boolean;
+    down: boolean;
+    dailydata: Array<Array<number>>;
 }
