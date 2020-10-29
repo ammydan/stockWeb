@@ -1,8 +1,25 @@
-<p>STOCK SEARCH</p>
-<div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-  <div class="input-group-append">
-    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+<div class="container h-50 d-flex justify-content-center align-items-center" >
+  <div class="d-flex justify-content-center flex-wrap ">
+    <div class="display-4 font-weight-bold pb-5 text-center">STOCK SEARCH</div>
+    <div class="w-100"></div>
+    <div id="searchComponent" class="rounded-pill pt-2 pb-1 px-2">
+      <input type="text"
+             aria-label="Number"
+             placeholder="Enter stock name"
+             matInput
+             [formControl]="myControl"
+             [matAutocomplete]="auto" id="searchinput" class="rounded-pill " size="25">
+      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="#6F4FFB" xmlns="http://www.w3.org/2000/svg" (click)="searchDetail()" >
+        <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+        <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+      </svg>
+      <!-- #enddocregion input -->
+      <!-- #docregion mat-autocomplete -->
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filterKeyword | async" [value]="option.ticker">
+          {{option.ticker}} | {{option.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </div>
   </div>
 </div>
-https://registry.npmjs.org/

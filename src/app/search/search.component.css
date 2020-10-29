@@ -1,0 +1,13 @@
+#searchinput{
+  border: none;
+}
+#searchinput:focus{
+  outline: none;
+  border: none;
+}
+#searchComponent {
+  border: 0.25em solid #6F4FFB;
+  height: 3em;
+}
+
+
