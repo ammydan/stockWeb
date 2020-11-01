@@ -1,0 +1,128 @@
+<div class="container">
+  <ngb-alert *ngIf="sellfailure"  type="danger"  class="text-center" (close)="sellfailure = false">
+    Trying to sell {{currentItem}} stocks fail (check the number).
+  </ngb-alert>
+  <ngb-alert *ngIf="sellok"  type="success"  class="text-center" (close)="sellok = false">
+    {{currentItem}} sold success.
+  </ngb-alert>
+  <ngb-alert *ngIf="buyok"  type="success"  class="text-center" (close)="buyok = false">
+    {{currentItem}} bought success.
+  </ngb-alert>
+  <ngb-alert *ngIf="buyfailure"  type="danger"  class="text-center" (close)="buyfailure = false">
+    {{currentItem}} bought failure (check the number).
+  </ngb-alert>
+</div>
+<div class="container my-5">
+  <div class="h1">My Portfolio</div>
+</div>
+
+
+<div class="container" *ngIf="loaded && buylist">
+  <div class="row row-cols-1 border" *ngFor="let item of (buylist|keyvalue)">
+    <div class="col py-1 px-3"  style="background-color: #F7F7F7"><span class="h3 pr-2" >{{item.key}}</span> <span class="h5"style="color:  #6A737F">{{item.value.name}}</span></div>
+    <div class="col p-3" style="font-size: 1.5em">
+      <div class="row row-cols-1 row-cols-sm-2">
+        <div class="col py-1">
+          <div class="row justify-content-between">
+            <div class="col">Quantity:</div>
+            <div class="col text-right">{{item.value.number | number: '1.0-0'}}</div>
+          </div>
+        </div>
+        <div class="col py-1">
+          <div class="row justify-content-between">
+            <div class="col">Change:</div>
+            <div class="col text-right" style="color: {{item.value.color}}">
+              <svg width="0.5em" height="0.5em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="#008000" xmlns="http://www.w3.org/2000/svg" *ngIf="item.value.up ">
+                <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+              </svg>
+              <svg width="0.5em" height="0.5em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="#ff0000" xmlns="http://www.w3.org/2000/svg" *ngIf="item.value.down ">
+                <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+              </svg>
+              {{(item.value.avg - item.value.price)| number: '1.2-2'}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row row-cols-1 row-cols-sm-2">
+        <div class="col py-1">
+          <div class="row justify-content-between">
+            <div class="col">Avg. Cost/Share:</div>
+            <div class="col text-right">{{(item.value.avg)| number: '1.2-2'}}</div>
+          </div>
+        </div>
+        <div class="col py-1">
+          <div class="row justify-content-between">
+            <div class="col" style="color: {{item.value.color}}">Current Price:</div>
+            <div class="col text-right">{{item.value.price | number: '1.2-2'}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="row row-cols-1 row-cols-sm-2">
+        <div class="col py-1">
+          <div class="row justify-content-between">
+            <div class="col">Total Cost:</div>
+            <div class="col text-right">{{item.value.total | number: '1.2-2'}}</div>
+          </div>
+        </div>
+        <div class="col py-1">
+          <div class="row justify-content-between">
+            <div class="col" style="color:{{item.value.color}}">Market Value:</div>
+            <div class="col text-right">{{(item.value.number * item.value.price) | number: '1.2-2'}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="background-color: #F7F7F7">
+      <div class="row justify-content-end p-1">
+        <button class="btn btn-primary m-2" (click)="buyitem(buycontent, item.key)">Buy</button>
+        <button class=" btn btn-danger m-2" (click)="sellitem(sellcontent, item.key)">Sell</button>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #buycontent let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">{{buylist.ticker}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Current Price: {{buylist[currentItem].price}}</p>
+      Quantity  <input type="number"  name="quantity" size="20" class="form-control"
+                       [formControl]="buyControl" min="0" style="width:13em; display:inline-block">
+    </div>
+    <div class="modal-footer justify-content-between">
+      <span>Total: {{buytotal}}</span>
+      <button type="button" class="btn btn-success" (click)="buyStocks(); modal.close('Close click')">Buy</button>
+    </div>
+  </ng-template>
+
+  <ng-template #sellcontent let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">{{buylist.ticker}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Current Price: {{buylist[currentItem].price}}</p>
+      Quantity  <input type="number"  name="quantity" size="20" class="form-control"
+                       [formControl]="sellControl" min="0" max="{{buylist[currentItem].number}}" style="width:13em; display:inline-block">
+    </div>
+    <div class="modal-footer justify-content-between">
+      <span>Total: {{selltotal}}</span>
+      <button type="button" class="btn btn-success" (click)="sellStocks(); modal.close('Close click')">Sell</button>
+    </div>
+  </ng-template>
+</div>
+
+
+<div class="container" *ngIf="!buylist">
+  <ngb-alert type="warning" [dismissible]="false" class="text-center" >
+    Currently you don't have any stock in your portfolio.
+  </ngb-alert>
+</div>
+<div class="container  d-flex justify-content-center align-items-center" *ngIf="!loaded" >
+  <mat-spinner color="#6F4FFB"></mat-spinner>
+</div>

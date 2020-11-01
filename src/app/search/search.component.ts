@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable, timer, Subscription} from 'rxjs';
-import {debounce} from 'rxjs/operators';
+import {catchError, debounce, mergeMap} from 'rxjs/operators';
 import {GetSearchService} from './get-seach-data.service';
 import {SearchKey} from '../interfaces/search-key';
 import { Router } from '@angular/router';
@@ -17,6 +17,7 @@ export class SearchComponent implements OnInit, OnDestroy{
   filterKeyword: Observable<SearchKey[]>;
   unsubscribeValue: Subscription;
   searchValue: string;
+  loadingSearch: boolean;
   constructor(private searchService: GetSearchService, private router: Router) { }
 
   ngOnInit(): void {
@@ -26,8 +27,27 @@ export class SearchComponent implements OnInit, OnDestroy{
     //     map(value => this._filter(value))
     //   );
     this.unsubscribeValue = this.myControl.valueChanges.pipe(debounce(() => timer(500))).subscribe(value => {
+      // console.log('change');
       this.searchValue = value;
-      this.filterKeyword  = this.searchService.getAutocompleteData(value);
+      if (!value || value === ''){
+        this.searchValue = null;
+        this.loadingSearch = false;
+        this.filterKeyword = null;
+        return ;
+      }
+      this.loadingSearch = true;
+      this.filterKeyword  = this.searchService.getAutocompleteData(value).pipe(
+        mergeMap(thevalue => {
+          this.loadingSearch = false;
+          return new Observable<SearchKey[]>(reserver => {
+            reserver.next(thevalue);
+          });
+        }),
+        catchError( error => {
+          this.loadingSearch = false;
+          return new Observable<SearchKey[]>();
+        })
+      );
     });
   }
 

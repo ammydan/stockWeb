@@ -16,8 +16,13 @@
       <!-- #enddocregion input -->
       <!-- #docregion mat-autocomplete -->
       <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filterKeyword | async" [value]="option.ticker">
+        <mat-option  *ngFor="let option of filterKeyword | async" [value]="option.ticker">
           {{option.ticker}} | {{option.name}}
+        </mat-option>
+        <mat-option *ngIf="loadingSearch" style="height: 8em">
+          <div class="d-flex justify-content-center align-items-center"  >
+            <mat-spinner color="#6F4FFB" diameter="70"></mat-spinner>
+          </div>
         </mat-option>
       </mat-autocomplete>
     </div>

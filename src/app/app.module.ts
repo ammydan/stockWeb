@@ -14,6 +14,8 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { DetailsComponent } from './details/details.component';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { WatchlistComponent } from './watchlist/watchlist.component';
+import { PortfolioComponent } from './portfolio/portfolio.component';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import { HighchartsChartModule } from 'highcharts-angular';
     AppComponent,
     TopnavbarComponent,
     SearchComponent,
-    DetailsComponent
+    DetailsComponent,
+    WatchlistComponent,
+    PortfolioComponent
   ],
   imports: [
     BrowserModule,

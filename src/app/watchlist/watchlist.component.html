@@ -1,0 +1,29 @@
+<div class="container my-5">
+  <div class="h1"> My Watchlist</div>
+</div>
+
+<div class="container" *ngIf="likelist">
+  <ngb-alert type="light"  class="row row-cols-2 justify-content-between border " *ngFor="let item of (likelist| keyvalue)" (close)="deleteItem(item.key)" (click)="seedetail(item.key)">
+      <div class="col h2 text-dark py-3">{{item.key}}</div>
+      <div class="col text-right h2 py-3" style="color: {{item.value.color}}">{{item.value.last}}</div>
+      <div class="col h4 text-dark" >{{item.value.name}}</div>
+      <div class="col text-right h4" style="color:{{item.value.color}}">
+        <svg width="0.5em" height="0.5em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="#008000" xmlns="http://www.w3.org/2000/svg" *ngIf="item.value.up">
+          <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+        </svg>
+        <svg width="0.5em" height="0.5em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="#ff0000" xmlns="http://www.w3.org/2000/svg" *ngIf="item.value.down">
+          <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+        </svg>
+        {{item.value.change}} ({{item.value.changePercent}}%)</div>
+  </ngb-alert>
+</div>
+<div class="container" *ngIf="!likelist">
+  <ngb-alert type="warning" [dismissible]="false" class="text-center" >
+    Currently you don't have any stock in your watchlist.
+  </ngb-alert>
+</div>
+
+<div class="container  d-flex justify-content-center align-items-center" *ngIf="!loaded" >
+  <mat-spinner color="#6F4FFB"></mat-spinner>
+</div>
+
