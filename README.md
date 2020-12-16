@@ -21,4 +21,28 @@ This is a Angular application. You need to download Node.js and then download An
 ```bash
 npm install -g @angular/cli
 ```
+```bash
+npm install
+```
+###### 3. start a web application
+```bash
+ng server
+```
+Then you can get into open the url.
+
+#### Sample
+###### 1. index.html
+![index.html](https://dpassests.oss-cn-shanghai.aliyuncs.com/index.PNG)
+![autocomplete](https://dpassests.oss-cn-shanghai.aliyuncs.com/autocomplete.PNG)
+###### 2. details.html
+![](https://dpassests.oss-cn-shanghai.aliyuncs.com/details_summary.PNG)
+![](https://dpassests.oss-cn-shanghai.aliyuncs.com/detaisl_news.PNG)
+![](https://dpassests.oss-cn-shanghai.aliyuncs.com/details_chart.PNG)
+![](https://dpassests.oss-cn-shanghai.aliyuncs.com/details_buy.PNG)
+![](https://dpassests.oss-cn-shanghai.aliyuncs.com/details_buySuccess.PNG)
+###### 3. some other pages
+![](https://dpassests.oss-cn-shanghai.aliyuncs.com/watchlist.PNG)
+![](https://dpassests.oss-cn-shanghai.aliyuncs.com/portfolio.PNG)
+
+
 
