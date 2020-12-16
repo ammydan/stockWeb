@@ -31,6 +31,8 @@ ng server
 Then you can get into open the url.
 
 #### Sample
+this is a example web url.
+https://stock-front.azurewebsites.net/
 ###### 1. index.html
 ![index.html](https://dpassests.oss-cn-shanghai.aliyuncs.com/index.PNG)
 ![autocomplete](https://dpassests.oss-cn-shanghai.aliyuncs.com/autocomplete.PNG)
