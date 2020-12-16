@@ -18,7 +18,7 @@
 
 
 <div class="container" *ngIf="loaded && buylist">
-  <div class="row row-cols-1 border" *ngFor="let item of (buylist|keyvalue)">
+  <div class="row row-cols-1 border my-3" *ngFor="let item of (buylist|keyvalue)">
     <div class="col py-1 px-3"  style="background-color: #F7F7F7"><span class="h3 pr-2" >{{item.key}}</span> <span class="h5"style="color:  #6A737F">{{item.value.name}}</span></div>
     <div class="col p-3" style="font-size: 1.5em">
       <div class="row row-cols-1 row-cols-sm-2">

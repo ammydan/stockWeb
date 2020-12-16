@@ -8,10 +8,11 @@ import {SearchKey} from '../interfaces/search-key';
   providedIn: 'root'
 })
 export class GetSearchService {
-  prefix = 'http://localhost:3000';
+  prefix = 'https://stockbackend.azurewebsites.net';
   constructor(private http: HttpClient) { }
   getAutocompleteData(key: string): Observable<SearchKey[]> {
-    // return this.http.get<SearchKey[]>(this.prefix + '/api/search/' + key);
-    return this.http.jsonp<SearchKey[]>(this.prefix + '/api/search/' + key, `callback`);
+    // return this.http.get<SearchKey[]>('/api/search/' + key);
+    return this.http.get<SearchKey[]>(this.prefix + '/api/search/' + key);
+    // return this.http.jsonp<SearchKey[]>(this.prefix + '/api/search/' + key, `callback`);
   }
 }

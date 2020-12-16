@@ -1,3 +1,7 @@
 .navbar{
   background-color:#6F4FFB;
 }
+.active{
+  border: white solid 0.1em;
+  border-radius: 1em;
+}

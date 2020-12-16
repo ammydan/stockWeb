@@ -16,6 +16,7 @@ import { DetailsComponent } from './details/details.component';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { WatchlistComponent } from './watchlist/watchlist.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { PortfolioComponent } from './portfolio/portfolio.component';
     SearchComponent,
     DetailsComponent,
     WatchlistComponent,
-    PortfolioComponent
+    PortfolioComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

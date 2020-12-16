@@ -100,10 +100,10 @@
       <<ng-template matTabContent>
       <div class="container">
         <div class="row my-3 row-cols-sm-2 row-cols-1" >
-          <div class="col my-2 border p-2" *ngFor="let news of thenewsData ; let i=index" style="background-color: #F6F6F6">
-            <div class="row row-cols-sm-2 row-cols-1 " (click)="openShare(shareContente,i)" >
-              <div class="col"><img src="{{news.urlToImage}}" class="w-100"></div>
-              <div class="col"><span>{{news.title}}</span></div>
+          <div class="col py-2 px-4" *ngFor="let news of thenewsData ; let i=index" >
+            <div class="row row-cols-sm-2 row-cols-1 h-100 border" style="background-color: #F6F6F6"(click)="openShare(shareContente,i)" >
+              <div class="col p-sm-3"><img src="{{news.urlToImage}}" class="w-100"></div>
+              <div class="col p-sm-3"><span>{{news.title}}</span></div>
             </div>
           </div>
         </div>

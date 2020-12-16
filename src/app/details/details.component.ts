@@ -50,6 +50,11 @@ export class DetailsComponent implements OnInit, OnDestroy{
   dailyData: number[][];
   jobhandler: any;
   loaded: boolean;
+  closenews: Subscription;
+  closehistory: Subscription;
+  closedaily: Subscription;
+  closemarket: Subscription;
+  closedescription: Subscription;
   constructor(private modalService: NgbModal, private detailsService: DetailsService, private route: ActivatedRoute) {
     this.timeClose = setInterval(() => {
       this.currentTime = new Date();
@@ -81,7 +86,7 @@ export class DetailsComponent implements OnInit, OnDestroy{
         if (mybuys){
           this.buylist = JSON.parse(mybuys);
         }
-        this.detailsService.getDescriptionData(this.keyw)
+        this.closedescription = this.detailsService.getDescriptionData(this.keyw)
           .pipe(timeout(4500), retry(2))
           .subscribe(value => {
             if ('error' in value){
@@ -89,18 +94,18 @@ export class DetailsComponent implements OnInit, OnDestroy{
             }
             this.hasdetail = true;
             this.description = value;
-            this.detailsService.getMarketData(this.keyw)
+            this.closemarket = this.detailsService.getMarketData(this.keyw)
             .pipe( timeout(4500), retry(2))
             .subscribe(value2 => {
               this.marketData = value2;
               this.openTime = new Date(this.marketData.timestamp);
-              if (this.openTime < this.currentTime){
+              if (this.currentTime.valueOf() - this.openTime.valueOf() > 60000){
                 this.market = false;
               }else {
                 this.market = true;
               }
 
-              this.detailsService.getDailyData(this.keyw)
+              this.closedaily = this.detailsService.getDailyData(this.keyw)
                 .pipe( timeout(4500), retry(2))
                 .subscribe(value3 => {
                 this.dailyData = value3;
@@ -123,17 +128,21 @@ export class DetailsComponent implements OnInit, OnDestroy{
                     data: this.dailyData
                   }]};
                 this.loaded = true;
+                const that = this;
                 this.jobhandler = setInterval(() => {
-                  this.detailsService.getMarketData(this.keyw)
+                  that.closemarket.unsubscribe();
+                  that.closedaily.unsubscribe();
+                  that.closedescription.unsubscribe();
+                  that.closemarket = this.detailsService.getMarketData(this.keyw)
                     .subscribe(value4 => {
                       this.marketData = value4;
                       this.openTime = new Date(this.marketData.timestamp);
-                      if (this.openTime < this.currentTime) {
+                      if (this.currentTime.valueOf() - this.openTime.valueOf() > 60000) {
                         this.market = false;
                       } else {
                         this.market = true;
                       }
-                      this.detailsService.getDailyData(this.keyw).subscribe(value5 => {
+                      that.closedaily = this.detailsService.getDailyData(this.keyw).subscribe(value5 => {
                         this.dailyData = value5;
                         this.chartOptions = {
                           title: {
@@ -164,12 +173,12 @@ export class DetailsComponent implements OnInit, OnDestroy{
           this.hasdetail = false;
           });
         // get the news data.
-        this.detailsService.getNewsData(this.keyw).subscribe(news => {
+        this.closenews = this.detailsService.getNewsData(this.keyw).subscribe(news => {
             this.thenewsData = news;
           }
         );
         // get the history data.
-        this.detailsService.getHistoryData(this.keyw)
+        this.closehistory = this.detailsService.getHistoryData(this.keyw)
           .pipe(timeout(15000), retry(2))
           .subscribe(mydata => {
           this.historydata = mydata;
@@ -381,6 +390,11 @@ export class DetailsComponent implements OnInit, OnDestroy{
     clearInterval(this.timeClose);
     clearInterval(this.jobhandler);
     this.unSubscribe.unsubscribe();
+    this.closedaily.unsubscribe();
+    this.closehistory.unsubscribe();
+    this.closedescription.unsubscribe();
+    this.closenews.unsubscribe();
+    this.closemarket.unsubscribe();
   }
 
 }

@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormControl} from '@angular/forms';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-portfolio',
   templateUrl: './portfolio.component.html',
   styleUrls: ['./portfolio.component.css']
 })
-export class PortfolioComponent implements OnInit {
+export class PortfolioComponent implements OnInit, OnDestroy{
   buyControl = new FormControl('');
   sellControl = new FormControl('');
   buylist: any;
@@ -19,6 +20,8 @@ export class PortfolioComponent implements OnInit {
   buyok: boolean;
   buyfailure: boolean;
   loaded: boolean;
+  buysubscription: Subscription;
+  sellsubscription: Subscription;
   constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
@@ -30,11 +33,11 @@ export class PortfolioComponent implements OnInit {
     if (templist && templist !== '{}'){
       this.buylist = JSON.parse(templist);
     }
-    this.buyControl.valueChanges.subscribe(num => {
+    this.buysubscription = this.buyControl.valueChanges.subscribe(num => {
       const numbers = num;
       this.buytotal = numbers * this.buylist[this.currentItem].price;
     });
-    this.sellControl.valueChanges.subscribe(num => {
+    this.sellsubscription = this.sellControl.valueChanges.subscribe(num => {
       const numbers = num;
       this.selltotal = numbers * this.buylist[this.currentItem].price;
     });
@@ -105,6 +108,10 @@ export class PortfolioComponent implements OnInit {
     }
     this.sellok = true;
     this.sellfailure = false;
+  }
+  ngOnDestroy(): void {
+    this.buysubscription.unsubscribe();
+    this.sellsubscription.unsubscribe();
   }
 
 }
