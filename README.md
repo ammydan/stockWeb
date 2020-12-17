@@ -8,6 +8,16 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 <a href="https://stockbackend.azurewebsites.net/api/news/aapl" target="_blank">news</a><br>
 <a href="https://stockbackend.azurewebsites.net/api/historydata/aapl" target="_blank">history data point</a><br>
 ```
+#### tech stack
+1. HTML
+2. CSS
+3. JavaScript
+4. TypeScript
+5. BootStrap
+6. AJAX
+7. Observable
+8. Event-driven model
+
 
 #### How to set the web application
 ###### 1. git clone this application
@@ -42,6 +52,7 @@ https://stock-front.azurewebsites.net/
 ![](https://dpassests.oss-cn-shanghai.aliyuncs.com/details_chart.PNG)
 ![](https://dpassests.oss-cn-shanghai.aliyuncs.com/details_buy.PNG)
 ![](https://dpassests.oss-cn-shanghai.aliyuncs.com/details_buySuccess.PNG)
+![](https://dpassests.oss-cn-shanghai.aliyuncs.com/share.PNG)
 ###### 3. some other pages
 ![](https://dpassests.oss-cn-shanghai.aliyuncs.com/watchlist.PNG)
 ![](https://dpassests.oss-cn-shanghai.aliyuncs.com/portfolio.PNG)
