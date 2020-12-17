@@ -43,19 +43,21 @@ Then you can get into open the url.
 #### Sample
 this is a example web url.
 https://stock-front.azurewebsites.net/
-###### 1. index.html
+###### In PC
 ![index.html](https://dpassests.oss-cn-shanghai.aliyuncs.com/index.PNG)
 ![autocomplete](https://dpassests.oss-cn-shanghai.aliyuncs.com/autocomplete.PNG)
-###### 2. details.html
 ![](https://dpassests.oss-cn-shanghai.aliyuncs.com/details_summary.PNG)
 ![](https://dpassests.oss-cn-shanghai.aliyuncs.com/detaisl_news.PNG)
 ![](https://dpassests.oss-cn-shanghai.aliyuncs.com/details_chart.PNG)
 ![](https://dpassests.oss-cn-shanghai.aliyuncs.com/details_buy.PNG)
 ![](https://dpassests.oss-cn-shanghai.aliyuncs.com/details_buySuccess.PNG)
 ![](https://dpassests.oss-cn-shanghai.aliyuncs.com/share.PNG)
-###### 3. some other pages
 ![](https://dpassests.oss-cn-shanghai.aliyuncs.com/watchlist.PNG)
 ![](https://dpassests.oss-cn-shanghai.aliyuncs.com/portfolio.PNG)
 
+###### In Mobile
+![](https://dpassests.oss-cn-shanghai.aliyuncs.com/mobile_index.PNG) ![](https://dpassests.oss-cn-shanghai.aliyuncs.com/mobile_search.PNG) ![](https://dpassests.oss-cn-shanghai.aliyuncs.com/moblie_searchd.PNG)
+![](https://dpassests.oss-cn-shanghai.aliyuncs.com/mobile_detail.PNG) ![](https://dpassests.oss-cn-shanghai.aliyuncs.com/mobile_dnews.PNG) ![](https://dpassests.oss-cn-shanghai.aliyuncs.com/mobile_dchart.PNG)
+![](https://dpassests.oss-cn-shanghai.aliyuncs.com/mobile_select.PNG) ![](https://dpassests.oss-cn-shanghai.aliyuncs.com/mobile_watch.PNG)
 
 
